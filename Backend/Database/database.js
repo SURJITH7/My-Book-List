@@ -3,6 +3,13 @@ const express = require('express');
 const dotenv = require('dotenv');
 
 dotenv.config();
+
+console.log("SUPABASE URL:", process.env.SUPABASE_URL);
+console.log(
+    "SUPABASE KEY:",
+    process.env.SUPABASE_KEY ? "Loaded" : "Missing"
+);
+
 const router = express.Router();
 const supabase = createClient( process.env.SUPABASE_URL,  process.env.SUPABASE_KEY)
 
@@ -169,17 +176,25 @@ router.get('/community', async (req, res) => {
 // Get books by genre
 router.get('/genre/:genre', async (req, res) => {
     const genre = req.params.genre;
+
     const { data, error } = await supabase
         .from('book')
-        .select('bookTitle, bookAuthor, bookCover')
+        .select('bookTitle:title, bookAuthor:author, bookCover:cover')
         .eq('category', genre)
         .limit(10);
 
     if (error) {
-        console.log(error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.log('GENRE SUPABASE ERROR:', error);
+
+        return res.status(500).json({
+            error: 'Internal Server Error',
+            details: error.message
+        });
     }
+
     return res.json(data);
 });
+
+
 
 module.exports = router;

@@ -13,7 +13,7 @@ const ViewAuthor = ({author}) =>{
     useEffect(() =>{
         const fetchData = async () => {
             try{
-                const response = await axios.get(`/api/view/author/${author}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/view/author/${author}`);
                 setBookData(response.data);
                 console.log(response.data);
             } catch (error){

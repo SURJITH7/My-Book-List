@@ -19,7 +19,7 @@ import { auth } from '../Firebase/firebase';
 import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
-import loadingImage from '../public/mybooklist_logo.svg'
+const loadingImage = '/mybooklist_logo.svg';
 
 const showTopbar = window.location.pathname !== "/" && 
                    window.location.pathname !== "/auth";

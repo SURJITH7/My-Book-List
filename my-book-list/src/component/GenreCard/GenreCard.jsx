@@ -16,7 +16,7 @@ const GenreCard = ({genre}) => {
     useEffect(() =>{
         const fetchData = async () => {
             try{
-                const response = await axios.get(`/api/genre/${genre}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/db/genre/${genre}`);
                 setBookData(response.data);
             } catch (error){
                 console.log("Error fetching the data:", error);

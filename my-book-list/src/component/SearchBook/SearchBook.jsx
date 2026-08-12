@@ -12,7 +12,7 @@ const SearchBook = ({book}) =>{
     useEffect(() =>{
         const fetchData = async () => {
             try{
-                const response = await axios.get(`/api/search/${book}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/search/book/${query}`);
                 setBookData(response.data);
                 console.log(response.data);
             } catch (error){

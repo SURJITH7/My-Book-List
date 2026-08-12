@@ -15,7 +15,7 @@ const Topbar = ({user}) => {
 
     useEffect(() => {
         if (user?.email) {
-            fetch('/api/get/username', {
+            fetch(`${import.meta.env.VITE_API_URL}/db/get/username`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -10,7 +10,7 @@ const Community = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/db/community`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/db/community`);
                 setPostData(response.data);
             } catch (error) {
                 console.log("Error fetching the data:", error);

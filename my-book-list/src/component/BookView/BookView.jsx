@@ -14,7 +14,8 @@ const BookView = ({title}) => {
     useEffect(() =>{
         const fetchData = async () => {
             try{
-                const response = await axios.get(`/api/view/book/${title}`);
+                const response = await axios.get(
+                     `${import.meta.env.VITE_API_URL}/api/view/book/${title}`);
                 setBookData(response.data);
             } catch (error){
                 console.log("Error fetching the data:", error);

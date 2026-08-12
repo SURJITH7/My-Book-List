@@ -9,7 +9,7 @@ const AddBook = ({ title, user }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/view/book/${title}`);
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/view/book/${title}`);
                 setBookData(response.data);
             } catch (error) {
                 console.log("Error fetching the data:", error);
@@ -24,7 +24,7 @@ const AddBook = ({ title, user }) => {
         const status = document.getElementById('status').value;
         const thoughts = document.getElementById('thoughts').value;
 
-        fetch('/db/submit/book', {
+        fetch(`${import.meta.env.VITE_API_URL}/db/submit/book`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
