@@ -92,65 +92,126 @@ router.post('/submit/user', async (req, res) => {
 
 // Add book to DB
 router.post('/submit/book', async (req, res) => {
-    const title = req.body.title;
-    const book = req.body.bookData;
-    const score = req.body.score;
-    const status = req.body.status;
-    const thoughts = req.body.thoughts;
+    try {
+        console.log("========== SUBMIT BOOK ==========");
+        console.log("Request body:", req.body);
 
-    // Insert new book
-    const { data: bookData, error: bookInsertError } = await supabase
-        .from('book')
-        .insert([{
-            title,
-            author: book.bookAuthor,
-            publisher: book.bookPublisher,
-            publishDate: book.bookPublishedDate,
-            isbn: book.isbn10 || book.isbn13,
-            description: book.bookDescription,
-            cover: book.bookCover,
-            category: book.bookCategory
-        }]).select();
+        const { title, bookData, score, status, thoughts, email } = req.body;
 
-    if (bookInsertError) {
-        console.log(bookInsertError);
-        return res.status(500).send('Error inserting book data');
+        if (!title || !bookData || !email) {
+            return res.status(400).json({
+                success: false,
+                error: "Missing required data"
+            });
+        }
+
+        // 1. Insert book
+        const { data: insertedBook, error: bookInsertError } = await supabase
+            .from('book')
+            .insert([
+                {
+                    title: title,
+                    author: bookData.bookAuthor,
+                    publisher: bookData.bookPublisher,
+                    publishDate: bookData.bookPublishedDate,
+                    isbn: bookData.isbn10 || bookData.isbn13,
+                    description: bookData.bookDescription,
+                    cover: bookData.bookCover,
+                    category: bookData.bookCategory
+                }
+            ])
+            .select();
+
+        console.log("Inserted book:", insertedBook);
+        console.log("Book insert error:", bookInsertError);
+
+        if (bookInsertError) {
+            return res.status(500).json({
+                success: false,
+                step: "book insert",
+                error: bookInsertError.message,
+                details: bookInsertError
+            });
+        }
+
+        if (!insertedBook || insertedBook.length === 0) {
+            return res.status(500).json({
+                success: false,
+                step: "book insert",
+                error: "Book was not inserted"
+            });
+        }
+
+        const bookId = insertedBook[0].bookId;
+
+        console.log("BOOK ID:", bookId);
+
+        // 2. Find user
+        const { data: userData, error: userSelectError } = await supabase
+            .from('user')
+            .select('userId')
+            .eq('email', email)
+            .single();
+
+        console.log("User data:", userData);
+        console.log("User error:", userSelectError);
+
+        if (userSelectError) {
+            return res.status(500).json({
+                success: false,
+                step: "user lookup",
+                error: userSelectError.message,
+                details: userSelectError
+            });
+        }
+
+        const userId = userData.userId;
+
+        console.log("USER ID:", userId);
+
+        // 3. Insert post
+        const { data: postData, error: postInsertError } = await supabase
+            .from('post')
+            .insert([
+                {
+                    postedDate: new Date().toISOString(),
+                    score: score,
+                    status: status,
+                    thoughts: thoughts,
+                    bookId: bookId,
+                    postedBy: userId
+                }
+            ])
+            .select();
+
+        console.log("Inserted post:", postData);
+        console.log("Post insert error:", postInsertError);
+
+        if (postInsertError) {
+            return res.status(500).json({
+                success: false,
+                step: "post insert",
+                error: postInsertError.message,
+                details: postInsertError
+            });
+        }
+
+        console.log("========== BOOK SUBMITTED SUCCESSFULLY ==========");
+
+        return res.status(200).json({
+            success: true,
+            message: "Posted Successfully"
+        });
+
+    } catch (error) {
+        console.error("========== SERVER ERROR ==========");
+        console.error(error);
+
+        return res.status(500).json({
+            success: false,
+            error: error.message
+        });
     }
-
-    const bookId = bookData[0].bookId; // Get the inserted bookId
-
-    // Get the userId based on email
-    const { data: userData, error: userSelectError } = await supabase
-        .from('user')
-        .select('userId')
-        .eq('email', req.body.email)
-        .single();
-
-    if (userSelectError) {
-        console.log(userSelectError);
-        return res.status(500).send('Error fetching user data');
-    }
-
-    const userId = userData.userId;
-
-    // Insert post
-    const { error: postInsertError } = await supabase
-        .from('post')
-        .insert([{
-            postedDate: new Date().toISOString(),
-            score,
-            status,
-            thoughts,
-            bookId,
-            postedBy: userId
-        }]);
-
-    if (postInsertError) {
-        console.log(postInsertError);
-        return res.status(500).send('Error creating post');
-    }
-
-    res.status(200).send('Posted Successfully');
 });
 
 // Get community
@@ -180,7 +241,7 @@ router.get('/genre/:genre', async (req, res) => {
     const { data, error } = await supabase
         .from('book')
         .select('bookTitle:title, bookAuthor:author, bookCover:cover')
-        .eq('category', genre)
+        .ilike('category', `%${genre}%`)
         .limit(10);
 
     if (error) {

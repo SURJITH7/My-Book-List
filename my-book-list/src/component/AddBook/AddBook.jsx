@@ -18,31 +18,90 @@ const AddBook = ({ title, user }) => {
         fetchData();
     }, [title]);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const score = parseInt(document.getElementById('score').value);
-        const status = document.getElementById('status').value;
-        const thoughts = document.getElementById('thoughts').value;
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     const score = parseInt(document.getElementById('score').value);
+    //     const status = document.getElementById('status').value;
+    //     const thoughts = document.getElementById('thoughts').value;
 
-        fetch(`${import.meta.env.VITE_API_URL}/db/submit/book`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({title, bookData, status, score, thoughts ,email:user.email})
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location = '/home';
-            } else {
-                throw new Error('Error creating post');
-            }
-        })
-        .catch(error => {
-            console.error('Error retrieving post:', error);
-        });
+    //     fetch(`${import.meta.env.VITE_API_URL}/db/submit/book`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({title, bookData, status, score, thoughts ,email:user.email})
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             window.location = '/home';
+    //         } else {
+    //             throw new Error('Error creating post');
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error('Error retrieving post:', error);
+    //     });
 
+    // };
+
+
+    const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!user?.email) {
+        console.error("User email is missing");
+        return;
+    }
+
+    if (!bookData) {
+        console.error("Book data is missing");
+        return;
+    }
+
+    const score = parseInt(document.getElementById('score').value);
+    const status = document.getElementById('status').value;
+    const thoughts = document.getElementById('thoughts').value;
+
+    const requestData = {
+        title,
+        bookData,
+        status,
+        score,
+        thoughts,
+        email: user.email
     };
+
+    console.log("Sending book data:", requestData);
+
+    try {
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/db/submit/book`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            }
+        );
+
+        const responseText = await response.text();
+
+        console.log("Backend status:", response.status);
+        console.log("Backend response:", responseText);
+
+        if (!response.ok) {
+            throw new Error(responseText || 'Error creating post');
+        }
+
+        console.log("Book added successfully");
+
+        window.location = '/home';
+
+    } catch (error) {
+        console.error("Error submitting book:", error);
+    }
+};
 
     return (
         <>
