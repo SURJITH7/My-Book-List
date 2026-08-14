@@ -5,7 +5,6 @@ const lodash = require('lodash');
 
 require('dotenv').config();
 const apiKeyBooks = process.env.API_KEY_BOOKS;
-console.log("GOOGLE API KEY:", apiKeyBooks);
 
 
 router.get('/book/:title', async (req, res) =>{
