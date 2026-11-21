@@ -1,4 +1,4 @@
-p {
+/* p {
     margin: 0;
 }
 
@@ -62,10 +62,123 @@ p {
     .cover {
         width: 100px;
         height: 150px;
-    }
+    }a
 
     .cover img {
         width: 100px;
         height: 150px;
+    }
+} */
+
+
+.bookCard {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+
+/* Book cover container */
+
+.cover {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    background: #f3f1ec;
+    border-radius: 7px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.13);
+}
+
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Book information */
+
+.bookInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 10px;
+    gap: 5px;
+    box-sizing: border-box;
+}
+
+/* Book title */
+
+.title {
+    width: 100%;
+    margin: 0;
+    color: #292820;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+    text-align: left;
+    cursor: pointer;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+/* Author */
+
+.author {
+    width: 100%;
+    margin: 0;
+    color: #89847b;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+}
+
+.title:hover {
+    color: #a77b43;
+}
+
+.author:hover {
+    color: #a77b43;
+}
+
+/* Small screens */
+
+@media (max-width: 480px) {
+    .bookInfo {
+        padding-top: 8px;
+        gap: 4px;
+    }
+
+    .title {
+        font-size: 12px;
+    }
+
+    .author {
+        font-size: 10px;
     }
 }

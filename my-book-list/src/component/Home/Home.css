@@ -1,0 +1,277 @@
+
+/* Main Homepage */
+.home-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+  color: #222831;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
+.home-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 300px;
+  padding: 48px;
+  border-radius: 20px;
+  background: #182a35;
+  color: #ffffff;
+  gap: 30px;
+}
+
+.hero-content {
+  max-width: 650px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-label,
+.section-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #d9a574;
+  margin-bottom: 16px;
+}
+
+.hero-content h1 {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15;
+  margin: 0  0 18px;
+  font-weight: 800;
+}
+
+.hero-content h1 span {
+  color: #d9a574;
+}
+
+.hero-content p {
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #c7d0d5;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.primary-btn {
+  background: #d9a574;
+  color: #182a35;
+}
+
+.primary-btn:hover {
+  background: #e5b88b;
+}
+
+.secondary-btn {
+  color: #ffffff;
+  border: 1px solid #64747e;
+}
+
+.secondary-btn:hover {
+  background: #293e4a;
+}
+
+/* Hero Book Decoration */
+.hero-decoration {
+  position: relative;
+  width: 260px;
+  min-width: 260px;
+  height: 230px;
+}
+
+.hero-book {
+  position: absolute;
+  width: 110px;
+  height: 165px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 14px;
+  writing-mode: vertical-rl;
+  border-radius: 5px 10px 10px 5px;
+  box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.book-one {
+  background: #b46e4e;
+  transform: rotate(-12deg);
+  left: 10px;
+  top: 35px;
+}
+
+.book-two {
+  background: #d9a574;
+  color: #182a35;
+  transform: rotate(8deg);
+  left: 90px;
+  top: 15px;
+}
+
+.book-three {
+  background: #526c7b;
+  transform: rotate(16deg);
+  left: 150px;
+  top: 50px;
+}
+
+/* Quick Overview Cards */
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 30px 0 45px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  padding: 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4ede5;
+  border-radius: 12px;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.stat-card h3 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.stat-card p {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+}
+
+/* Genre Section */
+.genre-section {
+  margin-top: 20px;
+}
+
+.section-heading {
+  margin-bottom: 24px;
+}
+
+.section-heading h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+  color: #222831;
+}
+
+.section-heading p {
+  color: #777;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Genre Grid */
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .home-hero {
+    padding: 32px;
+  }
+
+  .hero-decoration {
+    transform: scale(0.8);
+    transform-origin: center right;
+  }
+
+  .home-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .genre-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .home-page {
+    padding: 16px;
+  }
+
+  .home-hero {
+    padding: 28px 22px;
+    min-height: auto;
+  }
+
+  .hero-decoration {
+    display: none;
+  }
+
+  .hero-content h1 {
+    font-size: 34px;
+  }
+
+  .hero-content p {
+    font-size: 14px;
+  }
+
+  .home-stats {
+    gap: 12px;
+    margin: 22px 0 35px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .genre-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .section-heading h2 {
+    font-size: 23px;
+  }
+}
