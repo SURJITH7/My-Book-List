@@ -16,18 +16,62 @@ const supabase = createClient( process.env.SUPABASE_URL,  process.env.SUPABASE_K
 
 
 // Get username to show on the topbar
+// router.post('/get/username', async (req, res) => {
+//     const { data, error } = await supabase
+//         .from('user')
+//         .select('name')
+//         .eq('email', req.body.email)
+//         .single();
+
+//     if (error) {
+//         return res.status(500).json({ error: 'Internal Server Error' });
+//     }
+
+//     return res.status(200).json({ userName: data.name });
+// });
+
+// Get username to show on the topbar
 router.post('/get/username', async (req, res) => {
-    const { data, error } = await supabase
-        .from('user')
-        .select('name')
-        .eq('email', req.body.email)
-        .single();
+    try {
+        const { email } = req.body;
 
-    if (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
+        if (!email) {
+            return res.status(400).json({
+                error: 'Email is required'
+            });
+        }
+
+        const { data, error } = await supabase
+            .from('user')
+            .select('name')
+            .eq('email', email)
+            .maybeSingle();
+
+        if (error) {
+            console.error('USERNAME FETCH ERROR:', error);
+
+            return res.status(500).json({
+                error: 'Failed to retrieve username'
+            });
+        }
+
+        if (!data) {
+            return res.status(404).json({
+                error: 'User not found'
+            });
+        }
+
+        return res.status(200).json({
+            userName: data.name
+        });
+
+    } catch (error) {
+        console.error('GET USERNAME SERVER ERROR:', error);
+
+        return res.status(500).json({
+            error: 'Internal Server Error'
+        });
     }
-
-    return res.status(200).json({ userName: data.name });
 });
 
 // Submit user data to DB

@@ -1,4 +1,4 @@
-.topBar {
+/* .topBar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -121,5 +121,249 @@
         right: 0;
         width: 100%;
         background-color: #994D1C;
+    }
+} */
+
+
+
+
+.header {
+    width: 100%;
+    background: #fffdf9;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+.topBar {
+    min-height: 76px;
+    padding: 12px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.logoButton {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.profileBar {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.searchBar {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #e5ded5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.searchBar form {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.searchBar:focus-within {
+    border-color: #a66a3f;
+    box-shadow: 0 0 0 3px rgba(166, 106, 63, 0.1);
+}
+
+.searchBar input {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    text-align: left;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.searchBar input::placeholder {
+    color: #a39a90;
+}
+
+.searchBar button {
+    flex: 0 0 42px;
+    width: 32px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: #995b32;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBar button:hover {
+    background: #784322;
+}
+
+.searchIcon {
+    font-size: 25px;
+    line-height: 1;
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.userName {
+    color: #49372b;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.logoutButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #e9e0d6;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.logoutButton:hover {
+    background: #f5eee6;
+}
+
+.logoutButton img {
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+}
+
+.navBar {
+    width: 100%;
+    background: #75452e;
+}
+
+.navContent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 5%;
+}
+
+.navContent a {
+    display: block;
+    padding: 14px 18px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.navContent a:hover {
+    background: #59331f;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .topBar {
+        padding: 12px 3%;
+        gap: 14px;
+    }
+
+    .profileBar {
+        gap: 14px;
+    }
+
+    .searchBar {
+        width: 240px;
+    }
+
+    .navContent {
+        padding: 0 3%;
+    }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+    .topBar {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .logo {
+        height: 40px;
+        max-width: 145px;
+    }
+
+    .profileBar {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .searchBar {
+        flex: 1;
+        width: auto;
+        height: 38px;
+    }
+
+    .userSection {
+        gap: 7px;
+    }
+
+    .userName {
+        max-width: 85px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11px;
+    }
+
+    .logoutButton {
+        width: 34px;
+        height: 34px;
+    }
+
+    .navContent {
+        padding: 0 10px;
+    }
+
+    .navContent a {
+        padding: 13px 14px;
+        font-size: 12px;
     }
 }
